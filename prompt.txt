@@ -1,0 +1,64 @@
+You are extracting structured data from the printed Index to Plato from Benjamin
+Jowett's translation of the Dialogues. Transcribe and structure what you see on the
+page images. Follow these rules exactly.
+
+LAYOUT (read order)
+The pages are typeset in TWO COLUMNS. Read the entire left column from top to bottom
+first, then the entire right column from top to bottom. Never read straight across
+the page from left to right; doing so splices unrelated entries together. Ignore the
+running header ("Index.") and the page number at the top of each page; they are not
+entry content.
+
+GREEK SCRIPT
+Some headwords and technical terms are printed in Greek. Transcribe Greek in proper
+Unicode Greek characters (e.g. φρόνησις, σοφία, ψυχή, ἀρετή), never transliterated
+into Latin letters and never as garbled symbols. Mark such an entry's headword_script
+as "greek" (or "mixed" if it combines Greek and Latin). If a Greek character is
+genuinely illegible in the scan, transcribe your best reading and do not substitute
+random Latin characters for it.
+
+ENTRIES AND SUB-ENTRIES
+Each entry begins with a headword. A sub-entry is a subordinate clause that narrows
+the headword to a specific context; in the source it is introduced by a ": —" delimiter
+or set off as an indented continuation. Place sub-entries in the sub_entries array,
+not as separate top-level entries.
+
+CITATIONS (the reference grammar)
+A citation has the form: Dialogue [. BookNumber] . StephanusPage [Column]. Examples:
+  "Rep. 5. 461 C"  -> dialogue Republic, book 5, page 461, column C
+  "Tim. 62 D"      -> dialogue Timaeus, book null, page 62, column D
+Resolve every dialogue abbreviation to its full name (Rep.=Republic, Laws.=Laws,
+Soph.=Sophist, Statesm.=Statesman, Phaedr.=Phaedrus, Theaet.=Theaetetus,
+Protag.=Protagoras, Symp.=Symposium, Gorg.=Gorgias, Tim.=Timaeus, Crit.=Critias or
+Crito by context, Parm.=Parmenides, Phil.=Philebus, Crat.=Cratylus, Apol.=Apology,
+Euthyph.=Euthyphro, Euthyd.=Euthydemus, Menex.=Menexenus, Charm.=Charmides,
+Hipp.=Hippias, Alcib.=Alcibiades, Eryx.=Eryxias, and the obvious others).
+Two conventions require care:
+  - "ib." or "id." stands in for the dialogue named just before it in the same run of
+    citations. Resolve it to that dialogue's full name; do not emit "ib." literally.
+  - "foll." after a page means the reference runs open-ended from that page. Set
+    open_ended = true and do not invent an end page.
+A book number written as Roman "IO" is the numeral 10, not the letters I and O.
+A column is one of A, B, C, D, E, or null if absent.
+
+CROSS-REFERENCES (keep the three types distinct)
+  - "See X"                -> type "see",      target X       (a full redirect)
+  - "(cp. X)"              -> type "compare",  target X       (a passage to compare)
+  - "v. sub voce" / "s.v." -> type "sub_voce", target X       (points into a sub-entry
+                                                               of headword X)
+Do not collapse these into one type; they mean different things.
+
+TWO CONTENT STRATA
+Most entries are reference material: a headword with citations and sub-entries. Set
+their stratum to "reference" and leave editorial_text empty.
+A few major headwords (e.g. Art, Virtue, Wisdom, Women) contain a long passage of
+discursive prose — Jowett's own interpretive commentary — typically italicized and in
+square brackets, containing NO citations. For such a passage set stratum to
+"editorial_annotation" and put the full prose verbatim in editorial_text. Do not try
+to parse editorial prose into citations or sub-entries; it is commentary, not
+reference data.
+
+GENERAL
+Transcribe faithfully. Do not summarize, normalize spelling, or omit entries. If a
+field does not apply, use the empty value the schema specifies (empty array, null, or
+empty string) rather than guessing.
